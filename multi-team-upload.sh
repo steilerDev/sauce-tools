@@ -41,8 +41,11 @@ for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
 
     echo "User now part of team ${NEW_TEAM_NAME}, uploading file..."
 
-    curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+    FILE_ID=$(curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         --request POST "${ENDPOINT}/v1/storage/upload" \
             --form 'payload=@"'$1'"' \
-        --form 'name="'$(basename $1)'"'
+        --form 'name="'$(basename $1)'"' | jq .item.id)
+
+    echo "Uploaded $1 (with File-ID ${FILE_ID}) for team ${NEW_TEAM_NAME} (Team-ID: ${TEAM})"
+    echo "##"
 done
