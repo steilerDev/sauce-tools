@@ -15,14 +15,20 @@ if [ ! -f "$1" ]; then
     exit
 fi
 
+if [ -z "$SAUCE_USERNAME" ]; then
+    echo "Env Variable SAUCE_USERNAME missing!"
+fi
+
+if [ -z "$SAUCE_ACCESS_KEY" ]; then
+    echo "Env Variable SAUCE_ACCESS_KEY missing!"
+fi
+
 echo "Getting current user id"
-# username should be unique
 USER_ID=$(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
     --request GET "${ENDPOINT}/team-management/v1/users?username=$SAUCE_USERNAME" \
     --header 'Content-Type: application/json' | jq -r '.results[0].id')
 echo "Obtained user id ${USER_ID}"
 
-# get teams
 echo "Loading teams"
 for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
                 --request GET "${ENDPOINT}/team-management/v1/teams" \
@@ -40,12 +46,14 @@ for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         }' | jq .user.teams[0].name)
 
     echo "User now part of team ${NEW_TEAM_NAME}, uploading file..."
-
     FILE_ID=$(curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         --request POST "${ENDPOINT}/v1/storage/upload" \
             --form 'payload=@"'$1'"' \
         --form 'name="'$(basename $1)'"' | jq .item.id)
 
+    echo
+    echo "#####"
     echo "Uploaded $1 (with File-ID ${FILE_ID}) for team ${NEW_TEAM_NAME} (Team-ID: ${TEAM})"
-    echo "##"
+    echo "#####"
+    echo
 done
