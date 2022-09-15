@@ -23,20 +23,20 @@ if [ -z "$SAUCE_ACCESS_KEY" ]; then
     echo "Env Variable SAUCE_ACCESS_KEY missing!"
 fi
 
-echo "Getting current user id"
+echo "Getting current user id for ${SAUCE_USERNAME}"
 USER_ID=$(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
     --request GET "${ENDPOINT}/team-management/v1/users?username=$SAUCE_USERNAME" \
     --header 'Content-Type: application/json' | jq -r '.results[0].id')
-echo "Obtained user id ${USER_ID}"
+echo " - Obtained user id ${USER_ID}"
 
 echo "Loading teams"
 for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
                 --request GET "${ENDPOINT}/team-management/v1/teams" \
                 --header 'Content-Type: application/json' | jq -r '.results[] | @base64'); do
     TEAM=$(echo ${row} | base64 --decode | jq -r '.id')
-    echo "Found team id $TEAM"
+    echo " - Found team id $TEAM"
 
-    echo "Switching user to team ${TEAM}"
+    echo "   - Switching user to team ${TEAM}"
     NEW_TEAM_NAME=$(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         --request POST "${ENDPOINT}/team-management/v1/membership/" \
         --header 'Content-Type: application/json' \
@@ -45,15 +45,12 @@ for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
             "team": "'${TEAM}'"
         }' | jq .user.teams[0].name)
 
-    echo "User now part of team ${NEW_TEAM_NAME}, uploading file..."
+    echo "   - User now part of team ${NEW_TEAM_NAME}, uploading file..."
     FILE_ID=$(curl --progress-bar -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         --request POST "${ENDPOINT}/v1/storage/upload" \
             --form 'payload=@"'$1'"' \
         --form 'name="'$(basename $1)'"' | jq .item.id)
 
-    echo
-    echo "#####"
-    echo "Uploaded $1 (with File-ID ${FILE_ID}) for team ${NEW_TEAM_NAME} (Team-ID: ${TEAM})"
-    echo "#####"
+    echo -e '\e[1A\e[K'"   - Uploaded $1 (with File-ID ${FILE_ID}) for team ${NEW_TEAM_NAME} (Team-ID: ${TEAM})"
     echo
 done
