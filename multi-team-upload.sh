@@ -46,7 +46,7 @@ for row in $(curl -s -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         }' | jq .user.teams[0].name)
 
     echo "User now part of team ${NEW_TEAM_NAME}, uploading file..."
-    FILE_ID=$(curl -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
+    FILE_ID=$(curl --progress-bar -u "$SAUCE_USERNAME:$SAUCE_ACCESS_KEY" --location \
         --request POST "${ENDPOINT}/v1/storage/upload" \
             --form 'payload=@"'$1'"' \
         --form 'name="'$(basename $1)'"' | jq .item.id)
