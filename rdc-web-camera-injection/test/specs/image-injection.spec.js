@@ -26,7 +26,7 @@ describe('Image Injection', () => {
             const webContext = await driver.getContext()
 
             console.debug("Switching to native context")
-            driver.switchContext("NATIVE_APP");
+            await driver.switchContext("NATIVE_APP");
 
             console.debug("Granting permissions...")
             const grantSelector = 'android=new UiSelector().text("Allow").className("android.widget.Button")'
