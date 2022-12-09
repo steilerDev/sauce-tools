@@ -1,0 +1,20 @@
+{
+  "name": "visual-e2e",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test.functional": "npx wdio test/configs/wdio.functional.conf.js",
+    "test.visual": "npx wdio test/configs/wdio.visual.conf.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@wdio/cli": "^7.16.12",
+    "@wdio/local-runner": "^7.16.12",
+    "@wdio/jasmine-framework": "^7.16.11",
+    "@wdio/sauce-service": "^7.16.12",
+    "@wdio/spec-reporter": "^7.16.11"
+  }
+}
