@@ -35,7 +35,11 @@ describe('Image Injection', () => {
             console.log('Permissions granted!')
 
             console.debug("Granting permissions duration...")
-            const permissionDurationSelector = 'android=new UiSelector().text("While using the app").className("android.widget.Button")'
+            let permissionDurationSelector = 'android=new UiSelector().text("While using the app").className("android.widget.Button")'
+            if(browser.capabilities.platformVersion === '10') {
+                console.debug(`Detected Android 10, using different selector for permissions duration...`)
+                permissionDurationSelector = 'android=new UiSelector().text("Allow").className("android.widget.Button")'
+            }
             await $(permissionDurationSelector).waitForExist()
             await $(permissionDurationSelector).click()
             console.log("Permissions duration granted!")

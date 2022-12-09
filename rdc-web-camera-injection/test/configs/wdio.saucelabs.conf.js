@@ -23,7 +23,7 @@ const _build = `rdc-web-camera-injection-${new Date().getTime()}`
 const _name = 'rdc-web-camera-injection'
 config.capabilities = [
   /**
-   * Android
+   * Android 12
    */
   {
     platformName: 'Android',
@@ -31,6 +31,21 @@ config.capabilities = [
     'appium:deviceName': 'Google.*',
     'appium:automationName': 'UiAutomator2',
     'appium:platformVersion': '12',
+    'appium:autoGrantPermissions': true,
+    'sauce:options': {
+      build: _build,
+      name: _name,
+    }
+  },
+  /**
+   * Android 10
+   */
+   {
+    platformName: 'Android',
+    browserName: 'Chrome',
+    'appium:deviceName': 'Google.*',
+    'appium:automationName': 'UiAutomator2',
+    'appium:platformVersion': '10',
     'appium:autoGrantPermissions': true,
     'sauce:options': {
       build: _build,
