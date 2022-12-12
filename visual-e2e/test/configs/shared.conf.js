@@ -15,7 +15,7 @@ exports.config = {
   connectionRetryTimeout: 5 * 60 * 1000,
   connectionRetryCount: 3,
   framework: 'jasmine',
-  reporters: [],
+  reporters: ['spec'],
   jasmineOpts: {
     defaultTimeoutInterval: 6000000,
   },

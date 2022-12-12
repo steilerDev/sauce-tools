@@ -3,27 +3,23 @@ describe('Sauce Demo', () => {
         await browser.url('');
 
         const sauceHeader = await $('#root > div > div.login_logo')
-        expect(sauceHeader).toBeDisplayed()
-        const sauceBot = await $('#root > div > div.login_wrapper > div.login_wrapper-inner > div.bot_column')
-        expect(sauceBot).toBeDisplayed()
-        const credentialsFooter = await $('#login_credentials')
-        expect(credentialsFooter).toHaveTextContaining([
-            "standard_user",
-            "locked_out_user",
-            "problem_user",
-            "performance_glitch_user"
-        ])
+        await expect(sauceHeader).toBeDisplayed()
 
-        await $('#user-name').addValue('standard_user')
-        await $('#password').addValue('secret_sauce')
+        const credentialsFooter = $('#login_credentials')
+        await expect(credentialsFooter).toHaveTextContaining(["standard_user", "locked_out_user", "problem_user", "performance_glitch_user"])
+
+        const userNameField = await $('#login_button_container > div > form > div:nth-child(1) > input')
+        await userNameField.setValue('standard_user')
+        const passwordField = await $('#login_button_container > div > form > div:nth-child(2) > input')
+        await passwordField.setValue('secret_sauce')
 
         await $('#login-button').click()
 
-        expect(browser).toHaveUrl('https://saucedemo.steilergroup.net/inventory.html')
+        await expect(browser).toHaveUrlContaining('https://saucedemo.steilergroup.net/inventory.html')
 
         const backpackTitle = await $('#item_4_title_link > div')
-        expect(backpackTitle).toHaveText('Sauce Labs Backpack')
+        await expect(backpackTitle).toHaveText('Sauce Labs Backpack')
         const backpackCost = await $('#inventory_container > div > div:nth-child(1) > div.inventory_item_description > div.pricebar > div')
-        expect(backpackCost).toHaveText('$29.99')
+        await expect(backpackCost).toHaveText('$29.99')
     });
 });

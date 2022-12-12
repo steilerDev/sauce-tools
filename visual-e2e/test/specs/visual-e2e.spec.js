@@ -5,8 +5,10 @@ describe('Sauce Demo', () => {
         await browser.execute('/*@visual.init*/', 'Login Journey');
         await browser.execute('/*@visual.snapshot*/', 'Login Form');
 
-        await $('#user-name').addValue('standard_user')
-        await $('#password').addValue('secret_sauce')
+        const userNameField = await $('#login_button_container > div > form > div:nth-child(1) > input')
+        await userNameField.setValue('standard_user')
+        const passwordField = await $('#login_button_container > div > form > div:nth-child(2) > input')
+        await passwordField.setValue('secret_sauce')
 
         await $('#login-button').click()
 
