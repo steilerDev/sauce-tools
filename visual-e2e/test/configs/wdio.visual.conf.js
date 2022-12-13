@@ -23,8 +23,6 @@ config.specs =  ['./test/specs/visual-e2e.spec.js'],
 // ===================
 // Cloud Configuration
 // ===================
-
-//Screener Configuration
 config.hostname = 'hub.screener.io'
 config.port = 443
 config.protocol = 'https'
