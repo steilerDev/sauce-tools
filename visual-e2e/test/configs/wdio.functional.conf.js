@@ -26,7 +26,7 @@ config.capabilities = [
   {
     browserName: 'chrome',
     platformName: 'windows 10',
-    browserVersion: 'latest',
+    browserVersion: '109',
     'sauce:options': {
         ...sauceOptions,
     },
@@ -34,7 +34,7 @@ config.capabilities = [
   {
     browserName: 'safari',
     platformName: 'macOS 10.15',
-    browserVersion: 'latest',
+    browserVersion: '13.1',
     'sauce:options': {
       ...sauceOptions,
     },

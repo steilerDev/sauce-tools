@@ -32,7 +32,7 @@ config.capabilities = [
   {
     browserName: 'chrome',
     platformName: 'windows 10',
-    browserVersion: 'latest',
+    browserVersion: '109',
     'sauce:options': {
         ...sauceOptions,
     },
@@ -42,9 +42,21 @@ config.capabilities = [
     }
   },
   {
+    browserName: 'chrome',
+    platformName: 'windows 10',
+    browserVersion: '109',
+    'sauce:options': {
+        ...sauceOptions,
+    },
+    'sauce:visual': {
+        ...visualOptions,
+        viewportSize: '1920x1080'
+    }
+  },
+  {
     browserName: 'safari',
     platformName: 'macOS 10.15',
-    browserVersion: 'latest',
+    browserVersion: '13.1',
     'sauce:options': {
       ...sauceOptions,
     },
