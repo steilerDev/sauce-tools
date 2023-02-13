@@ -38,7 +38,7 @@ config.capabilities = [
     },
     'sauce:visual': {
         ...visualOptions,
-        viewportSize: '1366x768'
+        viewportSize: '393x830' // Actual resolution: '1080x2280' but CSS pixel ration of 2.75
     }
   },
   {
@@ -62,7 +62,19 @@ config.capabilities = [
     },
     'sauce:visual': {
       ...visualOptions,
-      viewportSize: '375x812'
+      viewportSize: '375x812' // Actual resolution: '1125x2436' but CSS Pixel Ratio of 3
+    }
+  },
+  {
+    browserName: 'safari',
+    platformName: 'macOS 10.15',
+    browserVersion: '13.1',
+    'sauce:options': {
+      ...sauceOptions,
+    },
+    'sauce:visual': {
+      ...visualOptions,
+      viewportSize: '1920x1080'
     }
   }
 ];
