@@ -12,7 +12,8 @@ const sauceOptions = {
 const visualOptions = {
   apiKey: process.env.SCREENER_API_KEY,
   projectName: `${projectName}`,
-  branch: 'main'
+  branch: 'main',
+  baseBranch: 'main'
 }  
 
 // ==================
