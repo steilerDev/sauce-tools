@@ -1,12 +1,16 @@
 FROM wiremock/wiremock
 
 # Getting dependencies
-RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
-	ca-certificates \
-	wget \
-    inotify-tools \
-    ncat
-
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install \
+        --no-install-recommends \
+        --fix-missing \
+        --assume-yes \
+            ca-certificates wget inotify-tools ncat && \
+    apt-get clean autoclean && \
+    apt-get autoremove && \
+    rm -rf /var/lib/{apt,dpkg,cache,log} /tmp/* /var/tmp/*
+	
 # Installing Sauce Connect
 ARG SERVICE_VERSION="4.9.1"
 ARG SC_PKG="sc-${SERVICE_VERSION}-linux.tar.gz"
