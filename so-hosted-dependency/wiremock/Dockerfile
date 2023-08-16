@@ -1,12 +1,13 @@
 FROM wiremock/wiremock
 
-# Getting Sauce Connect & dependencies
+# Getting dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y \
 	ca-certificates \
 	wget \
     inotify-tools \
     ncat
 
+# Installing Sauce Connect
 ARG SERVICE_VERSION="4.9.1"
 ARG SC_PKG="sc-${SERVICE_VERSION}-linux.tar.gz"
 RUN wget https://saucelabs.com/downloads/${SC_PKG} && \
@@ -14,7 +15,8 @@ RUN wget https://saucelabs.com/downloads/${SC_PKG} && \
     mv sc-${SERVICE_VERSION}-linux/bin/sc /sc && \
     rm -rf ${SC_PKG} sc-${SERVICE_VERSION}-linux
 
-COPY docker-assets/sauce-entrypoint.sh /
+# Creating custom entrypoint
+COPY sauce-entrypoint.sh /
 RUN chmod +x /sauce-entrypoint.sh
 
 ## Setting up wiremock
