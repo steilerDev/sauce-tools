@@ -1,0 +1,25 @@
+kind: imagerunner
+apiVersion: v1alpha
+
+sauce:
+  region: eu-central-1
+
+suites:
+  - name: "wiremock-orchestrate"
+    workload: other
+    image: steilerdev/wiremock-so:latest
+    env:
+      SAUCE_USERNAME: $SAUCE_USERNAME
+      SAUCE_ACCESS_KEY: $SAUCE_ACCESS_KEY
+      SAUCE_REGION: eu-central
+      SAUCE_TUNNEL_NAME: 'so-tunnel'
+    artifacts:
+      - "/opt/logs/*"
+
+artifacts:
+  cleanup: false
+  download:
+    when: always
+    match:
+      - '*'
+    directory: artifacts/
