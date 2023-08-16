@@ -55,7 +55,7 @@ echo "Waiting for any request to port $KILL_PORT before ending session"
 RESPONSE_CMD="echo 'HTTP/1.1 200 OK';"
 RESPONSE_CMD+="echo 'Content-Type: text/plain';"
 RESPONSE_CMD+="echo;"
-RESPONSE_CMD+="echo 'Stopping SC and WireMock. Please close Sauce session.'"
+RESPONSE_CMD+="echo 'Stopping SC and WireMock. Please close all Sauce Labs sessions using this backend.'"
 
 KILL_CMD="kill -15 1"
 
